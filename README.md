@@ -22,5 +22,10 @@ A simple web application to demonstrate the interaction between a front-end and 
    git clone https://github.com/ansegura7/basic-web-calculator.git
    cd basic-web-calculator
 
+## Author
+- Created by <a href="https://github.com/ansegura7">Andrés Segura Tinoco</a>
+- Created on Jan 14, 2024
+- Last update on Jan 14, 2024
+
 ## License
 This project is licensed under the terms of the <a href="https://github.com/ansegura7/basic-web-calculator/blob/main/LICENSE">Apache License 2.0</a>.

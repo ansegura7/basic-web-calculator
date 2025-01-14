@@ -12,10 +12,12 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 class OperationRequest(BaseModel):
     value1: float
     value2: float
     operation: str
+
 
 @app.post("/calculate")
 def calculate(request: OperationRequest):
@@ -31,7 +33,9 @@ def calculate(request: OperationRequest):
         result = value1 * value2
     elif operation == "divide":
         if value2 == 0:
-            raise HTTPException(status_code=400, detail="Division by zero is not allowed")
+            raise HTTPException(
+                status_code=400, detail="Division by zero is not allowed"
+            )
         result = value1 / value2
     else:
         raise HTTPException(status_code=400, detail="Invalid operation")
