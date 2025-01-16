@@ -12,8 +12,10 @@ document.getElementById("calculateButton").
         body: JSON.stringify({ value1, value2, operation })
       });
 
-      if (!response.ok)
-        throw new Error("Error in response");
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.detail || "An unknown error occurred");
+      }
 
       const data = await response.json();
       document.getElementById("result").textContent = data.result;
