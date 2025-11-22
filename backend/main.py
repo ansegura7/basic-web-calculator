@@ -1,6 +1,11 @@
+from enum import Enum
+from pydantic import BaseModel
+
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
+import uvicorn
+
+from engine import calculate
 
 app = FastAPI()
 
@@ -13,31 +18,35 @@ app.add_middleware(
 )
 
 
+class Operation(str, Enum):
+    add = "add"
+    subtract = "subtract"
+    multiply = "multiply"
+    divide = "divide"
+
+
 class OperationRequest(BaseModel):
     value1: float
     value2: float
-    operation: str
+    operation: Operation
 
 
 @app.post("/calculate")
-def calculate(request: OperationRequest):
+async def calculate_endpoint(request: OperationRequest):
     value1 = request.value1
     value2 = request.value2
     operation = request.operation
 
-    if operation == "add":
-        result = value1 + value2
-    elif operation == "subtract":
-        result = value1 - value2
-    elif operation == "multiply":
-        result = value1 * value2
-    elif operation == "divide":
-        if value2 == 0:
-            raise HTTPException(
-                status_code=400, detail="Division by zero is not allowed"
-            )
-        result = value1 / value2
-    else:
-        raise HTTPException(status_code=400, detail="Invalid operation")
+    try:
+        result = await calculate(value1, value2, operation)
+        return {"result": result}
 
-    return {"result": result}
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+    except Exception:
+        raise HTTPException(status_code=500, detail="Internal server error")
+
+
+if __name__ == "__main__":
+    uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)
