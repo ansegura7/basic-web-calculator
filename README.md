@@ -21,6 +21,46 @@ A simple web application to demonstrate the interaction between a front-end and 
    ```bash
    git clone https://github.com/ansegura7/basic-web-calculator.git
    cd basic-web-calculator
+   ```
+
+### Manual Installation & Execution (Backend)
+
+Follow these steps in order to run the FastAPI backend locally:
+
+1. Create a virtual environment
+
+   ```bash
+   python -m venv .venv
+   ```
+
+2. Activate the virtual environment
+
+   ```bash
+   .\.venv\Scripts\activate
+   ```
+
+3. Upgrade pip
+
+   ```bash
+   python -m pip install --upgrade pip
+   ```
+
+4. Install the required packages
+
+   ```bash
+   pip install -r .\requirements.txt
+   ```
+
+5. Run the FastAPI application
+
+   ```bash
+   python .\backend\main.py
+   ```
+
+After running the application, the API will be available at:
+
+- Swagger UI → http://127.0.0.1:8000/docs
+- ReDoc → http://127.0.0.1:8000/redoc
 
 ## Author
 - Created by <a href="https://github.com/ansegura7">Andrés Segura Tinoco</a>
