@@ -1,3 +1,6 @@
+from data_layer import save_operation
+
+
 async def calculate(value1: float, value2: float, operation: str) -> float:
     operation = operation.lower()
 
@@ -17,5 +20,8 @@ async def calculate(value1: float, value2: float, operation: str) -> float:
 
     else:
         raise ValueError("Invalid operation")
+
+    # Save the operation in the SQLite database
+    save_operation(value1, value2, operation, result)
 
     return result

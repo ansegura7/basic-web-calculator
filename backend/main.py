@@ -6,6 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 
 from engine import calculate
+from data_layer import initialize_db, get_all_operations
 
 app = FastAPI()
 
@@ -31,6 +32,11 @@ class OperationRequest(BaseModel):
     operation: Operation
 
 
+@app.on_event("startup")
+def startup_event():
+    initialize_db()
+
+
 @app.post("/calculate")
 async def calculate_endpoint(request: OperationRequest):
     value1 = request.value1
@@ -46,6 +52,12 @@ async def calculate_endpoint(request: OperationRequest):
 
     except Exception:
         raise HTTPException(status_code=500, detail="Internal server error")
+
+
+@app.get("/history")
+def history():
+    operations = get_all_operations()
+    return {"operations": operations}
 
 
 if __name__ == "__main__":
