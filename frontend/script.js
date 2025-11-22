@@ -12,6 +12,7 @@ document.getElementById("calculateButton").
         body: JSON.stringify({ value1, value2, operation })
       });
 
+      console.log(response)
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.detail || "An unknown error occurred");
